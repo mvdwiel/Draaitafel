@@ -1,0 +1,34 @@
+int ledPin = 13;          //led op poort 13
+const int buttonPin = 2;  // the number of the pushbutton pin
+
+int actief = 0;
+int buttonState = 0;  // variable for reading the pushbutton status
+
+void setup() {
+  // put your setup code here, to run once:
+  pinMode(ledPin, OUTPUT);    //stel de ledPin in als uitvoer
+  pinMode(buttonPin, INPUT);  // initialize the pushbutton pin as an input
+  Serial.begin(9600);
+}
+
+void loop() {                            // put your main code here, to run repeatedly:
+  buttonState = digitalRead(buttonPin);  // read the state of the pushbutton value:
+  Serial.println(actief);
+  if (buttonState == LOW) {
+    if (actief == 0) {
+      delay(200);
+      actief = 1;
+    } else {
+      delay(200);
+      actief = 0;
+    }
+  }
+  if (actief == 1) {                                  // check if the pushbutton is pressed. If it is, the buttonState is LOW
+    int dd = map(analogRead(A0), 0, 1023, 10, 1000);  // Reads Potentiometer and maps it to an integer between 10 to 1000)
+    //Serial.println(dd);
+    digitalWrite(ledPin, HIGH);  // turn the LEDs on (HIGH is the voltage level)
+    delay(dd);                   // wait for however long sets by the potentiometer
+    digitalWrite(ledPin, LOW);   // turn the LEDs off by making the voltage LOW
+    delay(dd);                   //  wait for however long sets by the potentiometer
+  }
+}
